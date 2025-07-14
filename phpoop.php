@@ -45,11 +45,13 @@ class PriceCandle {
     public function setClose($close) {
         $this->close = $close;
     }
+
+    // Method to display a summary of the candle
+    public function displaySummary() {
+        return "Candle Summary: Open: {$this->open}, High: {$this->high}, Low: {$this->low}, Close: {$this->close}";
+    }
 }
 
 $testCandle = new PriceCandle(100, 110, 90, 105);
-echo "Open: " . $testCandle->getOpen() . "\n";
-echo "High: " . $testCandle->getHigh() . "\n";
-echo "Low: " . $testCandle->getLow() . "\n";
-echo "Close: " . $testCandle->getClose() . "\n";
+echo $testCandle->displaySummary();
 ?>
