@@ -66,10 +66,12 @@ class PriceCandle {
         return $this->close - $this->open;
     }
 
+    // Method to determine if the candle is bullish
     public function isBullish() {
         return $this->close > $this->open;
     }
 
+    // Method to determine if the candle is bearish
     public function isBearish() {
         return $this->close < $this->open;
     }
