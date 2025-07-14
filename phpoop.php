@@ -60,8 +60,24 @@ class PriceCandle {
     public function displaySummary() {
         return "Candle Summary: Open: {$this->open}, High: {$this->high}, Low: {$this->low}, Close: {$this->close}, Volume: {$this->volume}";
     }
+
+    // Method to calculate the price change from open to close
+    public function calcPriceChange() {
+        return $this->close - $this->open;
+    }
+
+    public function isBullish() {
+        return $this->close > $this->open;
+    }
+
+    public function isBearish() {
+        return $this->close < $this->open;
+    }
 }
 
 $testCandle = new PriceCandle(100, 110, 90, 105, 1000);
-echo $testCandle->displaySummary();
+echo $testCandle->displaySummary(); // Should return "Candle Summary: Open: 100, High: 110, Low: 90, Close: 105, Volume: 1000"
+echo "\nPrice Change: " . $testCandle->calcPriceChange(); // Should return 5
+echo "\nIs Bullish: " . ($testCandle->isBullish() ? 'Yes' : 'No'); // Should return true
+echo "\nIs Bearish: " . ($testCandle->isBearish() ? 'Yes' : 'No'); // Should return false
 ?>
