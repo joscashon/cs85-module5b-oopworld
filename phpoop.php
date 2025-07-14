@@ -1,10 +1,11 @@
 <?php
 class PriceCandle {
-    private $open;
-    private $high;
-    private $low;
-    private $close;
+    private $open; // Opening price of the candle
+    private $high; // Highest price of the candle
+    private $low;  // Lowest price of the candle
+    private $close; // Closing price of the candle
 
+    // Constructor to initialize the candle with open, high, low, and close prices
     public function __construct($open, $high, $low, $close) {
         $this->open = $open;
         $this->high = $high;
@@ -12,6 +13,7 @@ class PriceCandle {
         $this->close = $close;
     }
 
+    // Getters and setters for each property
     public function getOpen() {
         return $this->open;
     }
@@ -44,4 +46,10 @@ class PriceCandle {
         $this->close = $close;
     }
 }
+
+$testCandle = new PriceCandle(100, 110, 90, 105);
+echo "Open: " . $testCandle->getOpen() . "\n";
+echo "High: " . $testCandle->getHigh() . "\n";
+echo "Low: " . $testCandle->getLow() . "\n";
+echo "Close: " . $testCandle->getClose() . "\n";
 ?>
