@@ -30,11 +30,12 @@ class PriceCandle {
         
         // Generate high and low within reasonable bounds
         $maxChange = $this->open * $volatility;
-        $this->high = $this->open + mt_rand(0, $maxChange * 100) / 100;
-        $this->low = $this->open - mt_rand(0, $maxChange * 100) / 100;
+        $this->high = $this->open + (mt_rand(0, 10000) / 10000) * $maxChange;
+        $this->low = $this->open - (mt_rand(0, 10000) / 10000) * $maxChange;
         
         // Generate close price between low and high
-        $this->close = mt_rand($this->low * 100, $this->high * 100) / 100;
+        $priceRange = $this->high - $this->low;
+        $this->close = $this->low + (mt_rand(0, 10000) / 10000) * $priceRange;
         
         // Ensure high is actually the highest and low is the lowest
         $allPrices = [$this->open, $this->high, $this->low, $this->close];
