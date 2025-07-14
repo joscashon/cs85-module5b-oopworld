@@ -4,13 +4,15 @@ class PriceCandle {
     private $high; // Highest price of the candle
     private $low;  // Lowest price of the candle
     private $close; // Closing price of the candle
+    private $volume; // Volume of trades during the candle period
 
-    // Constructor to initialize the candle with open, high, low, and close prices
-    public function __construct($open, $high, $low, $close) {
+    // Constructor to initialize the candle with open, high, low, and close prices as well as trade volume
+    public function __construct($open, $high, $low, $close, $volume) {
         $this->open = $open;
         $this->high = $high;
         $this->low = $low;
         $this->close = $close;
+        $this->volume = $volume;
     }
 
     // Getters and setters for each property
@@ -30,6 +32,10 @@ class PriceCandle {
         return $this->close;
     }
 
+    public function getVolume() {
+        return $this->volume;
+    }
+
     public function setOpen($open) {
         $this->open = $open;
     }
@@ -46,12 +52,16 @@ class PriceCandle {
         $this->close = $close;
     }
 
+    public function setVolume($volume) {
+        $this->volume = $volume;
+    }
+
     // Method to display a summary of the candle
     public function displaySummary() {
-        return "Candle Summary: Open: {$this->open}, High: {$this->high}, Low: {$this->low}, Close: {$this->close}";
+        return "Candle Summary: Open: {$this->open}, High: {$this->high}, Low: {$this->low}, Close: {$this->close}, Volume: {$this->volume}";
     }
 }
 
-$testCandle = new PriceCandle(100, 110, 90, 105);
+$testCandle = new PriceCandle(100, 110, 90, 105, 1000);
 echo $testCandle->displaySummary();
 ?>
