@@ -15,6 +15,36 @@ class PriceCandle {
         $this->volume = $volume;
     }
 
+    // Method to initialize the candle with semi-random values based on another candle (Written by claude sonnet 4)
+    public function initFromCandle($baseCandle, $volatility = 0.05) {
+        // Get the close price of the base candle as our starting point
+        $basePrice = $baseCandle->getClose();
+        $baseVolume = $baseCandle->getVolume();
+        
+        // Generate semi-random variation (±volatility%)
+        $priceVariation = $basePrice * $volatility * (mt_rand(-100, 100) / 100);
+        $volumeVariation = $baseVolume * 0.3 * (mt_rand(-100, 100) / 100); // 30% volume variation
+        
+        // Calculate new open price based on base candle's close with variation
+        $this->open = $basePrice + $priceVariation;
+        
+        // Generate high and low within reasonable bounds
+        $maxChange = $this->open * $volatility;
+        $this->high = $this->open + mt_rand(0, $maxChange * 100) / 100;
+        $this->low = $this->open - mt_rand(0, $maxChange * 100) / 100;
+        
+        // Generate close price between low and high
+        $this->close = mt_rand($this->low * 100, $this->high * 100) / 100;
+        
+        // Ensure high is actually the highest and low is the lowest
+        $allPrices = [$this->open, $this->high, $this->low, $this->close];
+        $this->high = max($allPrices);
+        $this->low = min($allPrices);
+        
+        // Set volume with variation
+        $this->volume = max(1, $baseVolume + $volumeVariation);
+    }
+
     // Getters and setters for each property
     public function getOpen() {
         return $this->open;
@@ -82,4 +112,17 @@ echo $testCandle->displaySummary(); // Should return "Candle Summary: Open: 100,
 echo "\nPrice Change: " . $testCandle->calcPriceChange(); // Should return 5
 echo "\nIs Bullish: " . ($testCandle->isBullish() ? 'Yes' : 'No'); // Should return true
 echo "\nIs Bearish: " . ($testCandle->isBearish() ? 'Yes' : 'No'); // Should return false
+
+// Test the new initFromCandle method (Written by claude sonnet 4)
+echo "\n\n--- Testing initFromCandle method ---\n";
+$newCandle = new PriceCandle(0, 0, 0, 0, 0); // Initialize with dummy values
+$newCandle->initFromCandle($testCandle, 0.1); // 10% volatility
+echo "\nNew candle based on test candle: " . $newCandle->displaySummary();
+echo "\nNew candle price change: " . $newCandle->calcPriceChange();
+echo "\nNew candle is bullish: " . ($newCandle->isBullish() ? 'Yes' : 'No');
+
+// Create another candle to show variation (Written by claude sonnet 4)
+$anotherCandle = new PriceCandle(0, 0, 0, 0, 0);
+$anotherCandle->initFromCandle($testCandle, 0.05); // 5% volatility
+echo "\nAnother candle with lower volatility: " . $anotherCandle->displaySummary();
 ?>
